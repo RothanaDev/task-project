@@ -1,11 +1,12 @@
 package com.chetraseng.taskflow_api.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 import com.chetraseng.taskflow_api.models.TaskModel;
 
 @Repository
-public interface TaskRepository extends JpaRepository<TaskModel, Long> {
+public interface TaskRepository extends JpaRepository<TaskModel, Long>, JpaSpecificationExecutor<TaskModel> {
 
 }

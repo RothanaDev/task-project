@@ -1,7 +1,10 @@
 package com.chetraseng.taskflow_api.models;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,4 +23,7 @@ public class ProjectModel extends BasedIdModel {
 
   @Column(name = "description", columnDefinition = "text")
   private String description;
+
+  @OneToMany(mappedBy = "project")
+  private List<TaskModel> tasks;
 }
