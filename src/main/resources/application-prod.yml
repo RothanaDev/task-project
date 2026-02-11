@@ -8,14 +8,5 @@ spring:
       maximum-pool-size: 5
 
   jpa:
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: update
-    properties:
-      hibernate:
-        jdbc:
-          lob:
-            non_contextual_creation: true
-        temp:
-          use_jdbc_metadata_defaults: false
-
