@@ -19,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-@Profile("dev") // optional: only seed when running with profile "dev"
+@Profile({"dev", "prod"})
 public class DataInit implements CommandLineRunner {
 
     private final ProjectRepository projectRepository;
