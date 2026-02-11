@@ -11,5 +11,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Trigger Render deploy hook
-        run: curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK }}"
+      - name: Trigger Render deploy hook (retry)
+        run: |
+          echo "Waiting so Docker Hub finishes updating latest..."
+          sleep 20
+
+          echo "Trigger Render deploy hook..."
+          curl -fsS -X POST "${{ secrets.RENDER_DEPLOY_HOOK }}"
+
+          echo "Done."
