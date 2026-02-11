@@ -8,15 +8,12 @@ RUN mvn -B -DskipTests dependency:go-offline
 COPY src ./src
 RUN mvn -B -DskipTests clean package
 
-
 # ====== Run stage ======
 FROM eclipse-temurin:21-jre
 WORKDIR /app
 
 COPY --from=build /app/target/taskflow-api-0.0.1-SNAPSHOT.jar app.jar
 
-# Optional (Render doesn't require EXPOSE, but it's fine)
 EXPOSE 10000
 
-# IMPORTANT: Use sh -c so ${PORT} expands
 ENTRYPOINT ["sh", "-c", "java -Xmx384m -Xss512k -XX:MaxMetaspaceSize=128m -Dserver.port=${PORT:-10000} -jar app.jar"]
