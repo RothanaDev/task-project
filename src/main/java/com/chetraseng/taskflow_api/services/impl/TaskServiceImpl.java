@@ -58,18 +58,21 @@ public class TaskServiceImpl implements TaskService {
     return tasks.stream().map(taskMapper::toTaskListResponse).toList();
   }
 
-  private final Specification<TaskModel> constructTaskSpec(TaskFilterRequest request) {
-    Specification<TaskModel> spec = Specification.unrestricted();
+    private Specification<TaskModel> constructTaskSpec(TaskFilterRequest request) {
+        Specification<TaskModel> spec = Specification.unrestricted();
 
-    if (request.getStatus() != null) {
-      spec = spec.and(TaskSpecification.equalStatus(request.getStatus()));
+        if (request == null) return spec;
+
+        if (request.getStatus() != null) {
+            spec = spec.and(TaskSpecification.equalStatus(request.getStatus()));
+        }
+
+        if (request.getName() != null && !request.getName().isBlank()) {
+            spec = spec.and(TaskSpecification.containsName(request.getName().trim()));
+        }
+
+        return spec;
     }
 
-    if (request.getName().length() > 0) {
-      spec = spec.and(TaskSpecification.containsName(request.getName()));
-    }
-
-    return spec;
-  }
 
 }

@@ -30,34 +30,34 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TaskModel extends BasedIdModel {
-  @Column(name = "name", columnDefinition = "varchar(255)")
-  private String name;
+    @Column(name = "name", columnDefinition = "varchar(255)")
+    private String name;
 
-  @Column(name = "description", columnDefinition = "text")
-  private String description;
+    @Column(name = "description", columnDefinition = "text")
+    private String description;
 
-  @Column(name = "priority", columnDefinition = "varchar(100)")
-  @Enumerated(value = EnumType.STRING)
-  private TaskPriority priority;
+    @Column(name = "priority", columnDefinition = "varchar(100)")
+    @Enumerated(value = EnumType.STRING)
+    private TaskPriority priority;
 
-  @Column(name = "due_date", columnDefinition = "timestamp")
-  private Instant dueDate;
+    @Column(name = "due_date", columnDefinition = "timestamp")
+    private Instant dueDate;
 
-  @Column(name = "status", columnDefinition = "varchar(100)")
-  @Enumerated(value = EnumType.STRING)
-  private TaskStatus status;
+    @Column(name = "status", columnDefinition = "varchar(100)")
+    @Enumerated(value = EnumType.STRING)
+    private TaskStatus status;
 
-  @JdbcTypeCode(SqlTypes.ARRAY)
-  @Column(name = "tags", columnDefinition = "varchar(100)[]")
-  private List<String> tags;
+    @JdbcTypeCode(SqlTypes.ARRAY)
+    @Column(name = "tags", columnDefinition = "varchar(100)[]")
+    private List<String> tags;
 
-  @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
-  private List<CommentModel> comments;
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
+    private List<CommentModel> comments;
 
-  @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
-  private List<SubTaskModel> subTasks;
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
+    private List<SubTaskModel> subTasks;
 
-  @ManyToOne
-  @JoinColumn(name = "project_id")
-  private ProjectModel project;
+    @ManyToOne
+    @JoinColumn(name = "project_id")
+    private ProjectModel project;
 }
