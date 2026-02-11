@@ -51,10 +51,16 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable);
 
         http.authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/v1/auth/**").permitAll() // fixed pattern
+                // ✅ Allow Render health check
+                .requestMatchers("/actuator/health", "/actuator/info").permitAll()
+
+                // ✅ Public endpoints
+                .requestMatchers("/api/v1/auth/**").permitAll()
                 .requestMatchers("/api/v1/projects/**").permitAll()
                 .requestMatchers("/api/v1/comments/**").permitAll()
                 .requestMatchers("/api/v1/tasks/**").permitAll()
+
+                // 🔒 Everything else requires authentication
                 .anyRequest().authenticated()
         );
         http.oauth2ResourceServer(oauth2 -> oauth2
