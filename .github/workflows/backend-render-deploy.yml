@@ -1,4 +1,4 @@
-name: Backend CD - Trigger Render Deploy
+name: Backend CD - Trigger Railway Redeploy
 
 on:
   workflow_run:
@@ -11,12 +11,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Trigger Render deploy hook (retry)
+      - name: Redeploy Railway (pull latest Docker image)
         run: |
-          echo "Waiting so Docker Hub finishes updating latest..."
-          sleep 60
+          docker run --rm \
+            -e RAILWAY_TOKEN="${{ secrets.RAILWAY_TOKEN }}" \
+            ghcr.io/railwayapp/cli:latest \
+            redeploy --service "${{ secrets.RAILWAY_SERVICE_ID }}" -y
 
-          echo "Trigger Render deploy hook..."
-          curl -fsS -X POST "${{ secrets.RENDER_DEPLOY_HOOK }}"
-
-          echo "Done."
