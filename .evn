@@ -1,0 +1,6 @@
+SPRING_PROFILES_ACTIVE=prod
+
+SPRING_DATASOURCE_URL=jdbc:postgresql://ep-muddy-fog-ah1q1c0v-pooler.c-3.us-east-1.aws.neon.tech:5432/task-manager?sslmode=require
+SPRING_DATASOURCE_USERNAME=neondb_owner
+SPRING_DATASOURCE_PASSWORD=npg_ngYzAphd2E8R
+
