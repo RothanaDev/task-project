@@ -24,12 +24,11 @@ jobs:
           java-version: "21"
           cache: maven
 
-      - name: Build & Push to GHCR with Jib (lowercase username)
+
+      - name: Build & Push to GHCR with Jib
         run: |
-          GHCR_USER_LOWER=$(echo "${GHCR_USERNAME}" | tr '[:upper:]' '[:lower:]')
-          export GHCR_USERNAME="$GHCR_USER_LOWER"
+          export GHCR_USERNAME="$(echo "${GITHUB_ACTOR}" | tr '[:upper:]' '[:lower:]')"
+          echo "Using GHCR_USERNAME=$GHCR_USERNAME"
           mvn -B -DskipTests jib:build
         env:
-
-          GHCR_USERNAME: ${{ github.actor }}
           GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
