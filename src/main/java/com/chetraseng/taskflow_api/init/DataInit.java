@@ -32,12 +32,12 @@ public class DataInit implements CommandLineRunner {
 
         // ---------- Projects ----------
         ProjectModel project1 = new ProjectModel();
-        project1.setName("TaskFlow API");
+        project1.setName("Kim san");
         project1.setDescription("Backend API for task management app");
         project1 = projectRepository.save(project1);
 
         ProjectModel project2 = new ProjectModel();
-        project2.setName("School Project");
+        project2.setName("Rothana");
         project2.setDescription("Assignments and homework tasks");
         project2 = projectRepository.save(project2);
 
