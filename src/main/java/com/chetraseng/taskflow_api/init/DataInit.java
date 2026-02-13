@@ -27,10 +27,11 @@ public class DataInit implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        // prevent duplicate seeding
-        if (projectRepository.count() > 0) return;
 
-        // ---------- Projects ----------
+        // DEMO ONLY: wipe and reseed every startup
+        taskRepository.deleteAll();
+        projectRepository.deleteAll();
+
         ProjectModel project1 = new ProjectModel();
         project1.setName("Kim san");
         project1.setDescription("Backend API for task management app");
@@ -41,7 +42,6 @@ public class DataInit implements CommandLineRunner {
         project2.setDescription("Assignments and homework tasks");
         project2 = projectRepository.save(project2);
 
-        // ---------- Tasks ----------
         TaskModel t1 = new TaskModel();
         t1.setName("Create Project CRUD");
         t1.setDescription("Add endpoints for creating, updating, deleting projects");
@@ -71,4 +71,6 @@ public class DataInit implements CommandLineRunner {
 
         taskRepository.saveAll(List.of(t1, t2, t3));
     }
+
+
 }
