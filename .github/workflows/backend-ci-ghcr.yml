@@ -24,9 +24,10 @@ jobs:
           java-version: "21"
           cache: maven
 
-      - name: Build & Push to GHCR with Jib (lowercase)
+      - name: Build & Push to GHCR with Jib (compile first)
         run: |
           OWNER_LOWER=$(echo "${GITHUB_REPOSITORY_OWNER}" | tr '[:upper:]' '[:lower:]')
+          echo "Using owner: $OWNER_LOWER"
           mvn -B -DskipTests clean compile jib:build \
             -Djib.to.image=ghcr.io/${OWNER_LOWER}/task-manager:latest \
             -Djib.to.auth.username=${OWNER_LOWER} \
