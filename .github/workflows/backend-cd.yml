@@ -1,35 +1,21 @@
-name: Backend CI - Build & Push DockerHub
+name: Backend CD - Trigger Railway Redeploy (after GHCR)
 
 on:
-  push:
-    branches: [main]
-
-permissions:
-  contents: read
+  workflow_run:
+    workflows: ["Backend CI - Build & Push GHCR (Jib)"]
+    types: [completed]
 
 jobs:
-  build-and-push:
+  deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Install Railway CLI
+        run: npm install -g @railway/cli
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+      - name: Redeploy Railway
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+        run: railway redeploy --service ${{ secrets.RAILWAY_SERVICE_ID }} --yes
 
-      - name: Login to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Build and push image (linux/amd64)
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          file: ./Dockerfile
-          push: true
-          platforms: linux/amd64
-          tags: |
-            phornrothana168/task-manager:latest
-            phornrothana168/task-manager:${{ github.sha }}
