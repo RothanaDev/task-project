@@ -24,11 +24,13 @@ jobs:
           java-version: "21"
           cache: maven
 
-
-      - name: Build & Push to GHCR with Jib
+      - name: Build & Push to GHCR with Jib (lowercase)
         run: |
-          export GHCR_USERNAME="$(echo "${GITHUB_ACTOR}" | tr '[:upper:]' '[:lower:]')"
-          echo "Using GHCR_USERNAME=$GHCR_USERNAME"
-          mvn -B -DskipTests jib:build
+          OWNER_LOWER=$(echo "${GITHUB_REPOSITORY_OWNER}" | tr '[:upper:]' '[:lower:]')
+          mvn -B -DskipTests clean compile jib:build \
+            -Djib.to.image=ghcr.io/${OWNER_LOWER}/task-manager:latest \
+            -Djib.to.auth.username=${OWNER_LOWER} \
+            -Djib.to.auth.password=${GITHUB_TOKEN}
         env:
-          GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

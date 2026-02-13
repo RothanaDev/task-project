@@ -137,14 +137,11 @@
                     <image>eclipse-temurin:21-jre</image>
                 </from>
                 <to>
-                    <image>ghcr.io/${env.GHCR_USERNAME}/task-manager:latest</image>
-                    <auth>
-                        <username>${env.GHCR_USERNAME}</username>
-                        <password>${env.GHCR_TOKEN}</password>
-                    </auth>
+                    <image>ghcr.io/placeholder/task-manager</image>
                 </to>
             </configuration>
         </plugin>
+
 
         <plugin>
         <groupId>org.apache.maven.plugins</groupId>
